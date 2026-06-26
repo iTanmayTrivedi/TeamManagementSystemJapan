@@ -12,7 +12,7 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { DEMO_USERS, type AppRole } from '@/lib/mockData';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AuthShowcase } from '@/components/auth/AuthShowcase';
-import { lovable } from '@/integrations/lovable';
+import { supabase } from '@/integrations/supabase/client';
 
 const roleIcons: Record<AppRole, typeof Shield> = {
   admin: UserCog,
@@ -74,12 +74,11 @@ export default function AuthPage() {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      const result = await lovable.auth.signInWithOAuth('google', {
-        redirect_uri: `${window.location.origin}/dashboard`,
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: `${window.location.origin}/dashboard` },
       });
-      if (result.error) throw result.error;
-      if (result.redirected) return;
-      navigate('/dashboard');
+      if (error) throw error;
     } catch (err: any) {
       toast({ title: t('error'), description: err.message, variant: 'destructive' });
       setLoading(false);
