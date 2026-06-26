@@ -52,8 +52,8 @@ export default function AuthPage() {
       } else if (mode === 'signup') {
         const { error } = await signUp(email, password, fullName, selectedRole);
         if (error) throw error;
-        setSignUpSuccess(true);
-        toast({ title: 'Verification email sent!', description: 'Please check your inbox and verify your email to complete sign up.' });
+        toast({ title: 'Account created!', description: 'Welcome aboard.' });
+        navigate('/dashboard');
       } else {
         const { error } = await signIn(email, password);
         if (error) throw error;
