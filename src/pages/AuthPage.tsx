@@ -5,7 +5,7 @@ import { useLanguage } from '@/hooks/useLanguage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Shield, Users, ClipboardList, UserCog } from 'lucide-react';
+import { Shield, Users, ClipboardList, UserCog, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
@@ -29,6 +29,7 @@ export default function AuthPage() {
   const [fullName, setFullName] = useState('');
   const [selectedRole, setSelectedRole] = useState<AppRole>('employee');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
   const [resetSent, setResetSent] = useState(false);
   const { signIn, signUp, loginAsDemo, resetPassword, user } = useAuth();
@@ -99,9 +100,9 @@ export default function AuthPage() {
         </div>
 
         {/* Center content */}
-        <div className="mx-auto w-full max-w-md">
+        <div className="mx-auto w-full max-w-md pt-10 min-[960px]:pt-14">
           <h1 className="mb-2 text-center text-3xl font-bold tracking-tight text-foreground min-[960px]:text-4xl xl:text-5xl" style={{ fontFamily: "'Inter', sans-serif" }}>
-            {mode === 'signin' ? 'Welcome back' : mode === 'signup' ? 'Get started' : 'Reset password'}
+            {mode === 'signin' ? 'Welcome to TeamHub' : mode === 'signup' ? 'Get started' : 'Reset password'}
           </h1>
           <p className="mb-8 text-center text-base text-muted-foreground">
             {mode === 'signin' ? 'Manage your team, track progress effortlessly' : mode === 'signup' ? 'Create your account and start collaborating' : 'Enter your email to receive a reset link'}
@@ -202,7 +203,27 @@ export default function AuthPage() {
                       </button>
                     )}
                   </div>
-                  <Input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required minLength={6} className="rounded-xl border-border bg-card h-11" />
+                  <div className="relative">
+                    <Input
+                      id="password"
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                      minLength={6}
+                      className="rounded-xl border-border bg-card h-11 pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(v => !v)}
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      tabIndex={-1}
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
                 </div>
               )}
               {mode === 'signup' && (
