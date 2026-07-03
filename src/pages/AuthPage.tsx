@@ -235,6 +235,32 @@ export default function AuthPage() {
               )}
               {mode === 'signup' && (
                 <div className="space-y-1.5">
+                  <Label htmlFor="confirmPassword" className="text-xs font-medium text-foreground">Confirm Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={e => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                      minLength={6}
+                      className="rounded-xl border-border bg-card h-11 pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(v => !v)}
+                      aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      tabIndex={-1}
+                    >
+                      {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                </div>
+              )}
+              {mode === 'signup' && (
+                <div className="space-y-1.5">
                   <Label htmlFor="role" className="text-xs font-medium text-foreground">Role</Label>
                   <Select value={selectedRole} onValueChange={(v) => setSelectedRole(v as AppRole)}>
                     <SelectTrigger className="rounded-xl border-border bg-card h-11">
