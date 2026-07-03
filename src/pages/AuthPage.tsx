@@ -30,6 +30,8 @@ export default function AuthPage() {
   const [selectedRole, setSelectedRole] = useState<AppRole>('employee');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
   const [resetSent, setResetSent] = useState(false);
   const { signIn, signUp, loginAsDemo, resetPassword, user } = useAuth();
