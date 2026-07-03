@@ -53,6 +53,11 @@ export default function AuthPage() {
         setResetSent(true);
         toast({ title: 'Reset link sent!', description: 'Check your email for a password reset link.' });
       } else if (mode === 'signup') {
+        if (password !== confirmPassword) {
+          toast({ title: t('error'), description: 'Passwords do not match', variant: 'destructive' });
+          setLoading(false);
+          return;
+        }
         const { error } = await signUp(email, password, fullName, selectedRole);
         if (error) throw error;
         toast({ title: 'Account created!', description: 'Welcome aboard.' });
