@@ -30,6 +30,8 @@ export default function AuthPage() {
   const [selectedRole, setSelectedRole] = useState<AppRole>('employee');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
   const [resetSent, setResetSent] = useState(false);
   const { signIn, signUp, loginAsDemo, resetPassword, user } = useAuth();
@@ -51,6 +53,11 @@ export default function AuthPage() {
         setResetSent(true);
         toast({ title: 'Reset link sent!', description: 'Check your email for a password reset link.' });
       } else if (mode === 'signup') {
+        if (password !== confirmPassword) {
+          toast({ title: t('error'), description: 'Passwords do not match', variant: 'destructive' });
+          setLoading(false);
+          return;
+        }
         const { error } = await signUp(email, password, fullName, selectedRole);
         if (error) throw error;
         toast({ title: 'Account created!', description: 'Welcome aboard.' });
@@ -222,6 +229,32 @@ export default function AuthPage() {
                       tabIndex={-1}
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
+                </div>
+              )}
+              {mode === 'signup' && (
+                <div className="space-y-1.5">
+                  <Label htmlFor="confirmPassword" className="text-xs font-medium text-foreground">Confirm Password</Label>
+                  <div className="relative">
+                    <Input
+                      id="confirmPassword"
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={e => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                      minLength={6}
+                      className="rounded-xl border-border bg-card h-11 pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(v => !v)}
+                      aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      tabIndex={-1}
+                    >
+                      {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
                   </div>
                 </div>
