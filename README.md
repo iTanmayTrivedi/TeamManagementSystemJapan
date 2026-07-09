@@ -184,7 +184,7 @@ A production-grade team platform with a three-tier role system (Admin / Manager 
 | **i18n** | Custom `LanguageProvider` (EN / JA) with localStorage persistence |
 | **Charts** | Recharts (donut, bar, line, area) |
 | **Tooling** | Bun · ESLint · Vitest |
-| **Deployment** | Lovable / Vercel-ready |
+| **Deployment** | Vercel |
 
 ---
 
@@ -306,7 +306,7 @@ Real internationalization is not translation — it is data design. Japanese Exc
 **Seeking full-stack engineering roles in Japan 🇯🇵**
 
 🌐 [tanmaytrivedi.dev](https://tanmaytrivedi.dev) •
-💼 [LinkedIn](https://linkedin.com/in/tanmaytrivedi) •
+💼 [LinkedIn](https://linkedin.com/in/itanmaytrivedi) •
 🐙 [GitHub](https://github.com/iTanmayTrivedi)
 
 ---
