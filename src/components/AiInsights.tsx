@@ -5,6 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Brain, Sparkles, ListOrdered, Activity, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/hooks/useLanguage';
 import ReactMarkdown from 'react-markdown';
+import { supabase } from '@/integrations/supabase/client';
+import { mockTasks, mockActivity, DEMO_USERS } from '@/lib/mockData';
+import { toast } from '@/hooks/use-toast';
 
 type InsightType = 'summary' | 'priority' | 'activity';
 
@@ -15,17 +18,32 @@ const MOCK_INSIGHTS: Record<InsightType, string> = {
 };
 
 export function AiInsights() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [activeTab, setActiveTab] = useState<InsightType>('summary');
   const [insights, setInsights] = useState<Record<InsightType, string>>({ summary: '', priority: '', activity: '' });
   const [loading, setLoading] = useState<Record<InsightType, boolean>>({ summary: false, priority: false, activity: false });
 
   const fetchInsight = async (type: InsightType) => {
     setLoading(prev => ({ ...prev, [type]: true }));
-    // Simulate AI delay
-    await new Promise(r => setTimeout(r, 800));
-    setInsights(prev => ({ ...prev, [type]: MOCK_INSIGHTS[type] }));
-    setLoading(prev => ({ ...prev, [type]: false }));
+    try {
+      const profiles: Record<string, string> = {};
+      DEMO_USERS.forEach(u => { profiles[u.id] = u.full_name; });
+      const tasks = mockTasks.getAll().map(tk => ({
+        title: tk.title, status: tk.status, priority: tk.priority, due_date: tk.due_date, assigned_to: tk.assigned_to,
+      }));
+      const logs = mockActivity.getRecent(30).map(l => ({ details: l.details }));
+      const { data, error } = await supabase.functions.invoke('ai-insights', {
+        body: { type, language: lang, tasks, logs, profiles },
+      });
+      if (error || !data?.insight) throw new Error(data?.error || error?.message || 'AI error');
+      setInsights(prev => ({ ...prev, [type]: data.insight }));
+    } catch (e) {
+      console.error('AI insight failed, using fallback:', e);
+      toast({ title: 'AI', description: e instanceof Error ? e.message : 'AI error', variant: 'destructive' });
+      setInsights(prev => ({ ...prev, [type]: MOCK_INSIGHTS[type] }));
+    } finally {
+      setLoading(prev => ({ ...prev, [type]: false }));
+    }
   };
 
   const tabs = [
