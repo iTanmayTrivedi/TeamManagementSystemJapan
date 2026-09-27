@@ -180,7 +180,7 @@ A production-grade team platform with a three-tier role system (Admin / Manager 
 | **Frontend** | React 18 · TypeScript 5 · Vite 5 · Tailwind CSS 3 · shadcn/ui |
 | **State / Data** | React Query · Custom event bus · Optimistic updates |
 | **Backend** | Supabase (PostgreSQL · Auth · Realtime · Edge Functions) |
-| **AI** | Lovable AI Gateway → `google/gemini-3-flash-preview` |
+| **AI** | Groq API → `llama-3.3-70b-versatile` |
 | **i18n** | Custom `LanguageProvider` (EN / JA) with localStorage persistence |
 | **Charts** | Recharts (donut, bar, line, area) |
 | **Tooling** | Bun · ESLint · Vitest |
@@ -208,7 +208,7 @@ A production-grade team platform with a three-tier role system (Admin / Manager 
 │   └─ has_role() SECURITY DEFINER                                         │
 │                                                                          │
 │   Edge Functions                                                         │
-│   ├─ ai-insights         → google/gemini-3-flash-preview                 │
+│   ├─ ai-insights         → Groq · llama-3.3-70b-versatile                │
 │   └─ due-date-reminders  → scheduled notifications                       │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
