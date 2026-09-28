@@ -14,10 +14,9 @@
 [![i18n](https://img.shields.io/badge/i18n-EN%20%2F%20JA-DC143C?style=flat-square)](#)
 [![License](https://img.shields.io/badge/License-MIT-amber?style=flat-square)](#)
 
-🌐 [Live Demo](https://your-url.com) •
-🎬 [Demo Video](https://youtube.com/your-video) •
+🌐 [Live Demo](https://teamhub.tanmaytrivedi.dev) •
 📖 [Case Study](https://tanmaytrivedi.dev/projects/teamhub) •
-💼 [LinkedIn](https://linkedin.com/in/tanmaytrivedi)
+💼 [LinkedIn](https://linkedin.com/in/itanmaytrivedi)
 
 ![TeamHub Auth](./screenshots/auth.png)
 
