@@ -11,7 +11,7 @@ window.sourceElementMap = sourceElementMap;
 
 const cleanFileName = (fileName) => {
   if (!fileName) return "";
-  return fileName.replace(/^\\/dev-server\\//, "");
+  return fileName.startsWith("/dev-server/") ? fileName.slice(12) : fileName;
 };
 
 const getSourceKey = (source) =>
